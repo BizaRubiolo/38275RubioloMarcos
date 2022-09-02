@@ -1,46 +1,25 @@
-//Funcion constructor de Objeto Producto
-function objetoProductos(){
-    class Producto{
-        constructor(id, tipo, marca, modelo, precio){
-            this.id = id;
-            this.tipo = tipo.toUpperCase();
-            this.marca = marca.toUpperCase();
-            this.modelo = modelo.toUpperCase();
-            this.precio = Number(precio)
-        }
-        descripProd(){return `- ${this.tipo} ${this.marca} ${this.modelo} $${this.precio}`};
+//Constructor de Objeto Producto
+class Producto{
+    constructor(id, tipo, marca, modelo, precio){
+        this.id = id;
+        this.tipo = tipo.toUpperCase();
+        this.marca = marca.toUpperCase();
+        this.modelo = modelo.toUpperCase();
+        this.precio = Number(precio)
     }
-
-    //Se crean algunos productos para mostrar en lista inicial y se pushean dentro del array de productos
-    const prod1 = new Producto(1, "televisor", "philips", 'gf 43"', 85400);
-    const prod2 = new Producto(2, "celular", "samsung", 'A32', 52300);
-    const prod3 = new Producto(3, "tablet", "alcatel", 'M 10"', 38000)
-    const prod4 = new Producto(4, "smartwatch", "xiaomi", 'miBand"', 14540)
-    const listaProductos = [];
-    listaProductos.push(prod1, prod2,prod3,prod4);
-    return listaProductos
+    descripProd(){return `- ${this.tipo} ${this.marca} ${this.modelo} $${this.precio}`};
 }
 
-//Funcion constructor de Objeto Formas de Pago.
-function objetoFormasPago(){
-    class FormasPago{
-        constructor(cant, descripcion, interes){
-            this.cant = Number(cant);
-            this.descripcion = descripcion.toLowerCase();
-            this.interes = Number(interes)
-        }
-        descripProd(){return this.cant+" "+this.descripcion+" "+this.interes+"%"};
-    }
+//Se crean algunos productos para mostrar en lista inicial y se pushean dentro del array de productos
+const prod1 = new Producto(1, "televisor", "philips", 'gf 43"', 85400);
+const prod2 = new Producto(2, "celular", "samsung", 'A32', 52300);
+const prod3 = new Producto(3, "tablet", "alcatel", 'M 10"', 38000);
+const prod4 = new Producto(4, "smartwatch", "xiaomi", 'miBand"', 14540);
+const listaProductos = [];
+listaProductos.push(prod1, prod2,prod3,prod4);
 
-    //Se crean algunas forma de pago y se pushean a la lista.
-    const pago1 = new FormasPago(1, "pago con descuento de", -10);
-    const pago2 = new FormasPago(3, "cuotas con interes de", 20);
-    const pago3 = new FormasPago(6, "cuotas con interes de", 35);
-    const pago4 = new FormasPago(12, "cuotas con interes de", 50);
-    const listaFromasDePago = [];
-    listaFromasDePago.push(pago1, pago2, pago3, pago4);
-    return listaFromasDePago
-}
+localStorage.setItem("productos", JSON.stringify(listaProductos))
+let muestra = JSON.parse(localStorage.getItem('productos'))
 
 //Funcion Evento click en boton comprar de cada producto
 function clickCompra(){
@@ -54,7 +33,7 @@ function clickCompra(){
 
 //Uso de innerTaxt para titulo
 let titulo = document.getElementById("titulo")
-titulo.innerText = "DESAFIO 6 - EVENTOS"
+titulo.innerText = "DESAFIO 7 - SEGUNDA ENTREGA FINAL"
 
 //Uso de innerHTML para agregar contenido a un contenedor
 let container = document.getElementById("contenedor")
@@ -68,22 +47,94 @@ bienvenida.innerHTML = "BIENVENIDO A NUESTRO HOT SALE !!!\nVEA NUESTRAS OFERTAS 
 let ingresar = document.getElementById("ingresar")
 let administrar = document.getElementById("administrador")
 
+
+//INTERACCION CON DOM
+//Traigo Botones Principales y el form para Agregar Productos
+let agregarProductos = document.getElementById("agregarProductos");
+// let verStock = document.getElementById("verStock");
+let formProductos = document.getElementById("formProductos");
+
+
+// //EVENTOS Y FUNCIONES
+// Evento click para cuando quiera ingresar a agregar productos
+agregarProductos.addEventListener("click", nuevoProducto)
+
+function nuevoProducto(){
+    //Se deshabilita el boton presionado dejando el otro activo
+    agregarProductos.disabled = true;
+    // verStock.disabled = false;
+    //Traigo el form de los productos para crearle contenido
+    formProductos.innerHTML = `<label for="">Tipo de Producto:</label>
+                                <input type="text" name="tipo" id="tipoProd" required>
+                                <label for="">Marca:</label>
+                                <input type="text" name="marca" id="marcaProd"required>
+                                <label for="">Modelo:</label>
+                                <input type="text" name="modelo" id="modeloProd"required>
+                                <label for="">Precio:</label>
+                                <input type="number" name="precio" id="precioProd"required>
+                                <input type="submit" value="GUARDAR PRODUCTO" id="botonAgregar">`
+
+    let tipoProd = formProductos.children[1].value;
+    let marcaProd = formProductos.children[3].value;
+    let modeloProd = formProductos.children[5].value;
+    let precioProd = formProductos.children[7].value;
+
+    //Evento Submit para tomar datos del formulario
+    formProductos.addEventListener('submit', crearProducto)
+
+    //Funcion para validar los datos ingresados por formulario
+    function validarForm() {
+        tipoProd = formProductos.children[1].value;
+        marcaProd = formProductos.children[3].value;
+        modeloProd = formProductos.children[5].value;
+        precioProd = formProductos.children[7].value;
+    }
+
+    //Funcion relacionada con el evento Submit del formulario
+    function crearProducto(e){
+        e.preventDefault()
+        validarForm();
+        let aprobar = confirm(`El producto a cargar es: ${tipoProd} ${marcaProd} ${modeloProd} $${precioProd}`)
+        if(aprobar){
+            let datos = e.target
+            listaProductos.push(new Producto((listaProductos.length)+1, tipoProd, marcaProd, modeloProd, precioProd))
+            formProductos.reset();
+        } else {
+            alert("La carga del producto se ha Cancelado")
+            formProductos.reset();
+        }
+    localStorage.setItem("productos", JSON.stringify(listaProductos))
+    muestra = JSON.parse(localStorage.getItem('productos'))  
+    ingresar.disabled = false;
+    }
+   
+} 
+
 //Evento click en VISITE TIENDA ingresa a ver los productos
 ingresar.onclick = () => {
     //Una vez que ingresa el boton VISITE TIENDA se desactiva
     ingresar.disabled = true;
-    administrar.disabled = true;
+    // administrar.disabled = true;
 
     //Llamamos al contenedor div "Productos" para mostrarlos en DOM
     let productosDiv = document.getElementById("productos");
-    const listaProductos = objetoProductos();
+    // const listaProductos = objetoProductos();
+
+
 // Iteramos el array de productos y creamos nodos hijos dentro del div "Productos"
-    for (const prod of listaProductos) {
-        let list = document.createElement("p")
-        list.innerHTML = `<p>${prod.descripProd()}</p><button class="botonComprar">COMPRAR</button>`
+    for (const prod of muestra) {
+
+        list = document.createElement("p")
+        // list.innerHTML = `<p>${prod.descripProd()}</p><button class="botonComprar">COMPRAR</button>`
+        productosDiv.appendChild(list);
+        list.innerHTML = `-<h4>${prod.tipo}</h4>
+                            <p class="pProd">${prod.marca} ${prod.modelo} </p>
+                            <b> $${prod.precio}</b>
+                            <button class="botonComprar">COMPRAR</button><br><br><br>
+                            `
         productosDiv.appendChild(list)
     }
-
+    
 //Traemos el array con los id de los productos comprados
     let queCompro = clickCompra()
 
@@ -99,7 +150,7 @@ ingresar.onclick = () => {
     function finalCompra(){
         const compraFinal = [];
         for (const idCompra of queCompro) {
-            let comProCompleto = listaProductos.find((el) => el.id == idCompra)
+            let comProCompleto = muestra.find((el) => el.id == idCompra)
             compraFinal.push(comProCompleto)
         };
 
@@ -113,7 +164,9 @@ ingresar.onclick = () => {
 //Iteramos el array de productos y creamos nodos hijos dentro del div "Productos"
         for (const prod of compraFinal) {
             let detalle = document.createElement("p")
-            detalle.innerHTML = `<p>${prod.descripProd()}</p>`
+            detalle.innerHTML = `-<h4>${prod.tipo}</h4>
+                                <p>${prod.marca} ${prod.modelo} </p>
+                                <b> $${prod.precio}</b>`
             productosDetalle.appendChild(detalle)
         }
 
@@ -123,25 +176,4 @@ ingresar.onclick = () => {
         productosDetalle.appendChild(montoFinal)
     }
 
-}
-
-//Ingreso al sector Administradores con boton administrador
-administrar.onclick = () => {
-    //Una vez que ingresa los botnes se desactivan
-    ingresar.disabled = true;
-    administrar.disabled = true;
-    
-    //Uso de innerHTML para agregar inputs de administracion
-let loginAdmin = document.getElementById("loginAdmin")
-loginAdmin.innerHTML ='<form action="" id="login"><input type="text" required placeholder="Usuario"><input type="password" required placeholder="Password"><input type="submit" value="Enviar"></form>'
-
-//Recibo los datos del login
-let rechazarLog = document.getElementById("login")
-rechazarLog.addEventListener("submit", datosForm)
-//Creo un alert sin sentido porque el resto del Programa se me rompio todo
-function datosForm(e){
-    e.preventDefault();
-    let datos = e.target
-    alert("Contraseña Incorrecta")
-}
-}
+} 
