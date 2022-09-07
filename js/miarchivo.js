@@ -33,7 +33,7 @@ function clickCompra(){
 
 //Uso de innerTaxt para titulo
 let titulo = document.getElementById("titulo")
-titulo.innerText = "DESAFIO 7 - SEGUNDA ENTREGA FINAL"
+titulo.innerText = "DESAFIO 8 - OPERADORES AVANZADOS"
 
 //Uso de innerHTML para agregar contenido a un contenedor
 let container = document.getElementById("contenedor")
@@ -94,15 +94,24 @@ function nuevoProducto(){
     function crearProducto(e){
         e.preventDefault()
         validarForm();
-        let aprobar = confirm(`El producto a cargar es: ${tipoProd} ${marcaProd} ${modeloProd} $${precioProd}`)
-        if(aprobar){
+
+
+        // Creo dos funciones para poder utilizar en el OPERADOR TERNARIO y reemplazar el IF anterior
+        function aprobado(){
             let datos = e.target
             listaProductos.push(new Producto((listaProductos.length)+1, tipoProd, marcaProd, modeloProd, precioProd))
             formProductos.reset();
-        } else {
+        } 
+        function cancelado (){
             alert("La carga del producto se ha Cancelado")
             formProductos.reset();
         }
+        //Genero la condicion desde un confirm
+        let aprobar = confirm(`El producto a cargar es: ${tipoProd} ${marcaProd} ${modeloProd} $${precioProd}`)
+        
+        //OPERADOR TERNARIO
+        aprobar ? aprobado() : cancelado()
+
     localStorage.setItem("productos", JSON.stringify(listaProductos))
     muestra = JSON.parse(localStorage.getItem('productos'))  
     ingresar.disabled = false;
@@ -129,7 +138,7 @@ ingresar.onclick = () => {
         productosDiv.appendChild(list);
         list.innerHTML = `-<h4>${prod.tipo}</h4>
                             <p class="pProd">${prod.marca} ${prod.modelo} </p>
-                            <b> $${prod.precio}</b>
+                            <b> $${prod.precio} + Iva</b>
                             <button class="botonComprar">COMPRAR</button><br><br><br>
                             `
         productosDiv.appendChild(list)
@@ -154,25 +163,45 @@ ingresar.onclick = () => {
             compraFinal.push(comProCompleto)
         };
 
+
+//DESESTRUCTURACION Y SPREAD OPERATOR
+//Al array de productos comprados lo desestructuro para obtener solo su precio y luego con spread creo una copia
+// y le agrego una nueva propiedad con el precio mas IVA.
+// No es muy prolijo pero es mas que todo para practicar lo visto en clases.
+        let precioIva = null
+        let compraIva = []
+        for (const datos of compraFinal) {
+            const {precio} = datos
+            precioIva = {
+                ...datos,
+                precioMasIva : precio * 1.21,
+            }
+            compraIva.push(precioIva)
+        } 
+        console.log(compraFinal)
+        console.log(compraIva)
+
+
+
 //Calcula el monto final de la compra
     let saldoAnterior = 0;
-    const precioTotal = compraFinal.reduce((acc, elemento) => acc + elemento.precio, saldoAnterior);
+    const precioTotal = compraIva.reduce((acc, elemento) => acc + elemento.precioMasIva, saldoAnterior);
 
 //Llamamos al div "Muestra" para mostrar la compra en el DOM
     let productosDetalle = document.getElementById("muestra");
     productosDetalle.innerHTML = "<h3>DETALLE DE COMPRA</h3>"
 //Iteramos el array de productos y creamos nodos hijos dentro del div "Productos"
-        for (const prod of compraFinal) {
-            let detalle = document.createElement("p")
+        for (const prod of compraIva) {
+            let detalle = document.createElement("div")
             detalle.innerHTML = `-<h4>${prod.tipo}</h4>
                                 <p>${prod.marca} ${prod.modelo} </p>
-                                <b> $${prod.precio}</b>`
+                                <b> $${prod.precioMasIva} (Iva Incluido)</b><br><br>`
             productosDetalle.appendChild(detalle)
         }
 
 //Mostramos precio final    
         let montoFinal = document.createElement("p")
-        montoFinal.innerHTML = `<b>Monto Final: $${precioTotal}</b>`
+        montoFinal.innerHTML = `<b>Monto Final: $${precioTotal} (Iva Incluido)</b>`
         productosDetalle.appendChild(montoFinal)
     }
 
