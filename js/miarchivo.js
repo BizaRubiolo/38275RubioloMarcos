@@ -14,9 +14,9 @@ class Producto{
 const prod1 = new Producto(1, "televisor", "philips", 'gf 43"', 85400);
 const prod2 = new Producto(2, "celular", "samsung", 'A32', 52300);
 const prod3 = new Producto(3, "tablet", "alcatel", 'M 10"', 38000);
-const prod4 = new Producto(4, "smartwatch", "xiaomi", 'miBand"', 14540);
+const prod4 = new Producto(4, "smartwatch", "xiaomi", 'miBand"', 14580);
 const listaProductos = [];
-listaProductos.push(prod1, prod2,prod3,prod4);
+listaProductos.push(prod1, prod2, prod3, prod4);
 
 localStorage.setItem("productos", JSON.stringify(listaProductos))
 let muestra = JSON.parse(localStorage.getItem('productos'))
@@ -26,22 +26,41 @@ function clickCompra(){
     let botonComprar = document.getElementsByClassName("botonComprar")
     let compraFinal = []
     for(let i = 0 ; i < botonComprar.length ; i++){
-        botonComprar[i].onclick = () => {compraFinal.push(i+1)}
+        botonComprar[i].onclick = () => {
+            compraFinal.push(i+1)
+
+            //LIBRERIA TOASTIFY
+            //Cada vez que el usuario haga click en comprar algun producto, vera la notificacion
+            Toastify({
+                text: "Se agrego a su Carrito",
+                duration: 2000,
+                destination: null,
+                newWindow: true,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                    background: "linear-gradient(to right, #079ac7, #96c93d)",
+                },
+                onclick: function(){}
+            }).showToast();
+        }
     }
     return compraFinal
 }
 
 //Uso de innerTaxt para titulo
 let titulo = document.getElementById("titulo")
-titulo.innerText = "DESAFIO 8 - OPERADORES AVANZADOS"
+titulo.innerText = "DESAFIO 9 - LIBRERIAS"
 
 //Uso de innerHTML para agregar contenido a un contenedor
 let container = document.getElementById("contenedor")
-container.innerHTML = "<h2>SIMULADOR TIENDA HOT SALE</h2><p><b>Alumno:</b> Marcos A. Rubiolo<br><br><b>Comisión:</b>38275</p>"
+container.innerHTML = "<h2>SIMULADOR TIENDA ELECTRODOMÉSTICOS</h2><p><b>Alumno:</b> Marcos A. Rubiolo<br><br><b>Comisión:</b>38275</p>"
 
 //Uso de innerHTML para agregar contenido a un titulo
-let bienvenida = document.getElementById("bienvenida")
-bienvenida.innerHTML = "BIENVENIDO A NUESTRO HOT SALE !!!\nVEA NUESTRAS OFERTAS !!!"
+// let bienvenida = document.getElementById("bienvenida")
+// bienvenida.innerHTML = "BIENVENIDO A NUESTRO HOT SALE !!!\nVEA NUESTRAS OFERTAS !!!"
 
 //Llamo al boton VISITE TIENDA para poder usarlo
 let ingresar = document.getElementById("ingresar")
@@ -95,28 +114,42 @@ function nuevoProducto(){
         e.preventDefault()
         validarForm();
 
+    //LIBRERIA SWEETALERT
+    //Modifique el confirm por 3 botones que ahora le permiten al administrador, cancelar, aceptar o modificar la carga
+        swal({
+            title: "El producto a cargar es: ",
+            text: `${tipoProd} ${marcaProd} ${modeloProd} $${precioProd}`,
+            icon: "warning",
+            buttons: {
+                cancelar: "Cancelar",
+                modificar: "Modificar",
+                aceptar: "Cargar Producto"
+            }
+        })
+        .then((value) => {
+            switch(value) {
+                case "cancelar":
+                    swal("", "La carga del producto se ha cancelado", "error")
+                    formProductos.reset();
+                    break;
 
-        // Creo dos funciones para poder utilizar en el OPERADOR TERNARIO y reemplazar el IF anterior
-        function aprobado(){
-            let datos = e.target
-            listaProductos.push(new Producto((listaProductos.length)+1, tipoProd, marcaProd, modeloProd, precioProd))
-            formProductos.reset();
-        } 
-        function cancelado (){
-            alert("La carga del producto se ha Cancelado")
-            formProductos.reset();
-        }
-        //Genero la condicion desde un confirm
-        let aprobar = confirm(`El producto a cargar es: ${tipoProd} ${marcaProd} ${modeloProd} $${precioProd}`)
-        
-        //OPERADOR TERNARIO
-        aprobar ? aprobado() : cancelado()
+                case "modificar":
+                    swal("Puede realizar las modificaciones")
+                    break;
+                
+                case "aceptar":
+                    let datos = e.target
+                    listaProductos.push(new Producto((listaProductos.length)+1, tipoProd, marcaProd, modeloProd, precioProd))
+                    formProductos.reset();
+                    swal("", "El producto se cargo correctamente", "success")
+                    break;
+            }
+        })
+    }
 
     localStorage.setItem("productos", JSON.stringify(listaProductos))
     muestra = JSON.parse(localStorage.getItem('productos'))  
     ingresar.disabled = false;
-    }
-   
 } 
 
 //Evento click en VISITE TIENDA ingresa a ver los productos
@@ -133,13 +166,13 @@ ingresar.onclick = () => {
 // Iteramos el array de productos y creamos nodos hijos dentro del div "Productos"
     for (const prod of muestra) {
 
-        list = document.createElement("p")
+        list = document.createElement("div")
         // list.innerHTML = `<p>${prod.descripProd()}</p><button class="botonComprar">COMPRAR</button>`
         productosDiv.appendChild(list);
-        list.innerHTML = `-<h4>${prod.tipo}</h4>
+        list.innerHTML = `<div id="cadaProd"><h4 class="pProd">${prod.tipo}</h4>
                             <p class="pProd">${prod.marca} ${prod.modelo} </p>
-                            <b> $${prod.precio} + Iva</b>
-                            <button class="botonComprar">COMPRAR</button><br><br><br>
+                            <b class="pProd"> $${prod.precio} + Iva</b>
+                            <button class="botonComprar">COMPRAR</button></div>
                             `
         productosDiv.appendChild(list)
     }
@@ -178,10 +211,6 @@ ingresar.onclick = () => {
             }
             compraIva.push(precioIva)
         } 
-        console.log(compraFinal)
-        console.log(compraIva)
-
-
 
 //Calcula el monto final de la compra
     let saldoAnterior = 0;

@@ -1,16 +1,27 @@
-#productos {
+#titulo{
+        text-align: center;
+    color: rgba(28, 17, 182, 0.726);
+    background-color: rgba(56, 211, 172, 0.849);
+    padding: 1.5em;
+    border-style: double;
+    
+}
+
+#cadaProd {
     display: inline-block;
     padding: 0.5em;
+    color: rgba(28, 17, 182, 0.726);
+    margin: 15px;
+    background-color: rgba(29, 105, 86, 0.562);
+    padding: 2px;
+    border-radius: 10px;
 }
 
-h4 {
-    display: inline;
+.pProd {
+    display: inline-flex;
+    padding: 2px;
 }
 
-/* p {
-    display: inline;
-    background-color: #c9c9c9;
-    padding: 0.5em;
-    margin: 20px;
-
-} */
+.botonComprar{
+    margin: 2px;
+}
