@@ -1,0 +1,109 @@
+#escudo{
+    display: flexbox;
+    text-align: center;
+    block-size: 70px;
+}
+#bandera{
+    display: flexbox;
+    text-align: center;
+    block-size: 70px;
+}
+#climalocal{
+    display: flexbox;
+    text-align: center;
+    background-color: antiquewhite;
+    margin: 5px;
+    border-style:groove;
+    font-style:unset;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    padding-bottom: 20px;
+}
+#titulo{
+    display: flexbox;
+    text-align: center;
+    text-size-adjust: 200px;
+    background-color: rgb(102, 184, 155);
+    margin: 20px;
+    border-style: double;
+    padding: 15px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: bisque;
+}
+#botonPais{
+    display: inline-flexbox;
+    padding: 5px;
+    margin: 20px;
+    text-align: center;
+    /* border-style: double; */
+    border-style: inherit;
+    font-style:unset;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 15px;
+    background-color: rgb(102, 184, 155);
+    font-weight: 800;
+    color: rgb(27, 26, 25);
+}
+label{
+    display: flexbox;
+    background-color:  rgb(102, 184, 155);
+    border-style: ridge;
+    text-align: center;
+    margin-left: 25px;
+    padding: 7.5px;
+    font-style:unset;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: bisque;
+}
+#seccion1{
+    background-color: rgba(167, 157, 73, 0.384);
+    padding-bottom: 10px;
+    margin: 20px;
+}
+#seccion2{
+    background-color: rgba(69, 134, 53, 0.384);
+    padding-bottom: 10px;
+    margin: 20px;
+}
+#iconoClima{
+    size: 70px;
+    padding-top: 5px;
+    /* block-size: 70px; */
+    border-radius: 10px;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    display: flexbox;
+    text-align: center;
+    text-align-last: justify;
+}
+#icono{
+    display: flexbox;
+    text-align: center;
+    background-color: rgba(142, 212, 139, 0.671);
+    margin: 5px;
+    border-style:groove;
+    font-style:unset;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    padding-bottom: 20px;
+}
+body{
+    background-color: rgb(222, 241, 241);
+}
+#pie{
+    display: flexbox;
+    text-align: center;
+    text-size-adjust: 50px;
+    background-color: rgb(102, 184, 155);
+    margin: 10px;
+    border-style: double;
+    padding: 30px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: bisque;
+}
+a{
+    text-align: center;
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-top: 10px;
+    padding: 20px;
+}

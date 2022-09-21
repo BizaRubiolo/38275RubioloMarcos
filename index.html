@@ -4,44 +4,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>38275RubioloMarcos</title>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link rel="stylesheet" href="styleSheet.css">
-
+    <link rel="stylesheet" type="text/css" href="estilos.css" media="screen" />
+    <title>Document</title>
 </head>
 <body>
-    <br>
-    <!-- ENCABEZADO PAGINA -->
-    <h1 id="titulo"></h1>
-    <div id="contenedor" style="text-align: center"></div>
-    <br>
-    <!-- <h3 id="bienvenida"></h3> -->
-    <br>
-    <!-- Botones de Menu Principal -->
-    <button id="ingresar">VISITE TIENDA</button>
-    <!-- <button id="administrador">ADMINISTRADOR</button> -->
+    <header>
+        <h2 id="titulo">DESAFIO 10 - INCORPORAR APIS CON FETCH</h2>
+    </header>
+    <!-- Hago un article para poder separar las muestras en diferentes secciones -->
+    <article>
 
-    <button id="agregarProductos" >AGREGAR PRODUCTOS</button>
-    <!-- <button id="verStock">VER STOCK ACTUAL</button> -->
+        <!-- Seccion 1 de muestra -->
+        <section id="seccion1">
+            <div id="climalocal"></div>
+        </section>
+        
+        <!-- Entre las secciones ubico el select que me permitira elegir el pais -->
+        <!-- La idea era crear un aside pero tuve algunos problemas de diseño -->
+        <label for="">ELIJA UNA CIUDAD PARA VER SU CLIMA</label>
+        <select name="" id="botonPais">
+            <option value="145">Buenos Aires, Argentina</option>
+            <option value="20">Brasilia, Brasil</option>
+            <option value="102">Warsaw, Polonia</option>
+            <option value="173">Paris, Francia</option>
+            <option value="175">Montevideo, Uruguay</option>
+            <option value="209">Washington, Estados Unidos</option>
+            <option value="196">Longres, Gran Bretaña</option>
+            <option value="193">Rabat, Marruecos</option>
+            <option value="49">Roma, Italia</option>
+            <option value="82">Berlin, Alemania</option>
+            <option value="97">Bogota, Colombia</option>
+            <option value="227">Tokyo, Japon</option>
+            <option value="215">Bangkok, Tailandia</option>
+        </select>
 
-    <div id="divFormProducto">
-        <form action="" id="formProductos"></form>
-    </div>
-
-
-    <!-- Se muestran los productos del stock -->
-    <div id="productos"></div>
-    <!-- Dentro del contenedor creamos el boton para finalizar compra -->
-    <div id="botonsalir" style="text-align: center"></div>
-    <br>
-    <!-- Mostramos el comprabante de la compra realizada y el monto final -->
-    <div id="muestra"></div>
-    <br>
+        <!-- Seccion 2 de muestra -->
+        <section id="seccion2">
+            <div id="icono"></div>
+        </section>
+        <footer id="pie"> APIS utilizadas en el Proyecto<br><br>
+            <a href="https://www.geojs.io/">www.geojs.io</a>
+            <a href="https://weatherstack.com/">www.weatherstack.com</a>
+            <a href="https://restcountries.com/">www.restcountries.com</a>
+        </footer>
+    </article>
 
 
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="js/miarchivo.js"></script>
+    <script src="otro-ejemplo.js"></script>
 </body>
 </html>
